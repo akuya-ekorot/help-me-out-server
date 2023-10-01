@@ -21,7 +21,6 @@ const storage = multer.diskStorage({
 const uploadMiddleware = multer({ storage: storage });
 
 router.post("/upload", uploadMiddleware.single("video"), async (req, res) => {
-  console.log(req.file);
   const trans = await transcription(req.file!.path);
   const path = req.file!.path.slice(8); // remove "uploads/" from path
 

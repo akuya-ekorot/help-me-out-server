@@ -26,9 +26,6 @@ router.get("/recordings", (_, res) => {
         transcription: trans,
       };
     });
-
-	console.log(files);
-
   res.status(200).json({
     files,
   });
