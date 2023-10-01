@@ -1,5 +1,4 @@
 import fs from "fs";
-import https from "https";
 import { execSync as exec } from "child_process";
 import deepgram from "../config/deepgram";
 import ffmpegStatic from "ffmpeg-static";
