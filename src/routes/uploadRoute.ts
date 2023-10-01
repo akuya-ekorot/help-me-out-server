@@ -1,21 +1,15 @@
 import { Router } from "express";
 import multer from "multer";
-import cloudinary from "../config/cloudinary";
+import transcription from "../services/transcription";
 
 const router = Router();
 
 const uploadMiddleware = multer({ dest: "uploads/" });
 
-router.post("/upload", uploadMiddleware.single("video"), (req, res) => {
-  cloudinary.uploader
-    .upload_stream({ resource_type: "video" }, (err, result) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          msg: "Something went wrong uploading the video to the server.",
-        });
-      }
-      return res.status(200).json({ url: result!.secure_url });
-    })
-    .end(req.file!.buffer);
+router.post("/upload", uploadMiddleware.single("video"), async (req, res) => {
+  const trans = await transcription(req.file!.path);
+
+  res.status(200).json({ trans });
 });
+
+export default router;
